@@ -66,7 +66,7 @@ function onGalleryClick(event) {
 
 function openModal() {
   refs.modal.classList.add('is-open');
-  refs.body.setAttribute('style', 'overflow: hidden'); // отключаю скролл при открытии модального окна
+  refs.body.style.overflow = 'hidden'; // отключаю скролл при открытии модального окна
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image.
