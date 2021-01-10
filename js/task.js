@@ -10,6 +10,7 @@
 import galleryItems from '../gallery-items.js';
 
 const refs = {
+  body: document.querySelector('body'),
   gallery: document.querySelector('.js-gallery'),
   modal: document.querySelector('.js-lightbox'),
   modalImg: document.querySelector('.lightbox__image'),
@@ -65,6 +66,7 @@ function onGalleryClick(event) {
 
 function openModal() {
   refs.modal.classList.add('is-open');
+  refs.body.setAttribute('style', 'overflow: hidden'); // отключаю скролл при открытии модального окна
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image.
@@ -89,6 +91,7 @@ function onCloseBtnClick() {
 
 function closeModal() {
   refs.modal.classList.remove('is-open');
+  refs.body.removeAttribute('style'); // возвращаю скролл при закрытии модального окна
 }
 
 // 6. Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
@@ -107,4 +110,35 @@ refs.lightboxOverlay.addEventListener('click', onCloseBtnClick);
 
 // 8. Закрытие модального окна по нажатию клавиши ESC.
 
+window.addEventListener('keydown', onEscClick);
+
+function onEscClick(event) {
+  if (event.code === 'Escape') {
+    onCloseBtnClick();
+  }
+}
+
 // 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+
+//! Не совсем корректно работает
+
+window.addEventListener('keydown', leafModalImg);
+
+function leafModalImg(event) {
+  if (event.code === 'ArrowLeft') {
+    for (let i = 0; i < galleryItems.length; i++) {
+      if (galleryItems[i].description === refs.modalImg.alt) {
+        refs.modalImg.src = `${galleryItems[i - 1].original}`;
+        refs.modalImg.alt = `${galleryItems[i - 1].description}`;
+      }
+    }
+  }
+  if (event.code === 'ArrowRight') {
+    for (let i = 0; i < galleryItems.length; i++) {
+      if (galleryItems[i].description === refs.modalImg.alt) {
+        refs.modalImg.src = `${galleryItems[i + 1].original}`;
+        refs.modalImg.alt = `${galleryItems[i + 1].description}`;
+      }
+    }
+  }
+}
