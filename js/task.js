@@ -64,7 +64,15 @@ function onGalleryClick(event) {
 
 function openModal(url, desc) {
   addModalImg(url, desc);
+  addClassIsOpen();
+  removeBodyScroll();
+}
+
+function addClassIsOpen() {
   refs.modal.classList.toggle('is-open'); // refs.modal.classList.add('is-open');
+}
+
+function removeBodyScroll() {
   refs.body.style.overflow = 'hidden'; // отключаю скролл при открытии модального окна
 }
 
@@ -81,7 +89,15 @@ refs.closeBtn.addEventListener('click', closeModal);
 
 function closeModal() {
   removeModalImg();
+  removeClassIsOpen();
+  backBodyScroll();
+}
+
+function removeClassIsOpen() {
   refs.modal.classList.toggle('is-open'); // refs.modal.classList.remove('is-open');
+}
+
+function backBodyScroll() {
   refs.body.removeAttribute('style'); // возвращаю скролл при закрытии модального окна
 }
 
