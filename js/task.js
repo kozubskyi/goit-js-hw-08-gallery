@@ -131,7 +131,7 @@ window.addEventListener('keydown', leafModalImg);
 function leafModalImg(event) {
   if (event.code === 'ArrowLeft' && refs.modal.classList.contains('is-open')) {
     for (let i = 0; i < galleryItems.length; i++) {
-      if (galleryItems[i].description === refs.modalImg.alt) {
+      if (galleryItems[i].original === refs.modalImg.src) {
         if (i === 0) {
           refs.modalImg.src = galleryItems[galleryItems.length - 1].original;
           refs.modalImg.alt = galleryItems[galleryItems.length - 1].description;
@@ -145,7 +145,7 @@ function leafModalImg(event) {
   }
   if (event.code === 'ArrowRight' && refs.modal.classList.contains('is-open')) {
     for (let i = galleryItems.length - 1; i >= 0; i--) {
-      if (galleryItems[i].description === refs.modalImg.alt) {
+      if (galleryItems[i].original === refs.modalImg.src) {
         if (i === galleryItems.length - 1) {
           refs.modalImg.src = galleryItems[0].original;
           refs.modalImg.alt = galleryItems[0].description;
