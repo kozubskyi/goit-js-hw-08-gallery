@@ -120,6 +120,8 @@ function onEscClick(event) {
 
 // 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
+// Сделал без data-index, сравнивал описание обьекта массива и альт изображения в модалке
+
 window.addEventListener('keydown', leafModalImg);
 
 function leafModalImg(event) {
