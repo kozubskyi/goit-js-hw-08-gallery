@@ -66,6 +66,7 @@ function onGalleryClick(event) {
 
 function openModal() {
   refs.modal.classList.add('is-open');
+  // refs.modal.classList.toggle('is-open');
   refs.body.style.overflow = 'hidden'; // отключаю скролл при открытии модального окна
 }
 
@@ -91,6 +92,7 @@ function onCloseBtnClick() {
 
 function closeModal() {
   refs.modal.classList.remove('is-open');
+  // refs.modal.classList.toggle('is-open');
   refs.body.removeAttribute('style'); // возвращаю скролл при закрытии модального окна
 }
 
@@ -131,6 +133,7 @@ function leafModalImg(event) {
         if (i === 0) {
           refs.modalImg.src = galleryItems[galleryItems.length - 1].original;
           refs.modalImg.alt = galleryItems[galleryItems.length - 1].description;
+          return;
         } else {
           refs.modalImg.src = galleryItems[i - 1].original;
           refs.modalImg.alt = galleryItems[i - 1].description;
@@ -144,6 +147,7 @@ function leafModalImg(event) {
         if (i === galleryItems.length - 1) {
           refs.modalImg.src = galleryItems[0].original;
           refs.modalImg.alt = galleryItems[0].description;
+          return;
         } else {
           refs.modalImg.src = galleryItems[i + 1].original;
           refs.modalImg.alt = galleryItems[i + 1].description;
