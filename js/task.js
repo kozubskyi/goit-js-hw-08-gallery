@@ -113,31 +113,39 @@ refs.lightboxOverlay.addEventListener('click', onCloseBtnClick);
 window.addEventListener('keydown', onEscClick);
 
 function onEscClick(event) {
-  if (event.code === 'Escape') {
+  if (event.code === 'Escape' && refs.modal.classList.contains('is-open')) {
     onCloseBtnClick();
   }
 }
 
 // 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
-//! Не совсем корректно работает
-
 window.addEventListener('keydown', leafModalImg);
 
 function leafModalImg(event) {
-  if (event.code === 'ArrowLeft') {
+  if (event.code === 'ArrowLeft' && refs.modal.classList.contains('is-open')) {
     for (let i = 0; i < galleryItems.length; i++) {
       if (galleryItems[i].description === refs.modalImg.alt) {
-        refs.modalImg.src = `${galleryItems[i - 1].original}`;
-        refs.modalImg.alt = `${galleryItems[i - 1].description}`;
+        if (i === 0) {
+          refs.modalImg.src = galleryItems[galleryItems.length - 1].original;
+          refs.modalImg.alt = galleryItems[galleryItems.length - 1].description;
+        } else {
+          refs.modalImg.src = galleryItems[i - 1].original;
+          refs.modalImg.alt = galleryItems[i - 1].description;
+        }
       }
     }
   }
-  if (event.code === 'ArrowRight') {
-    for (let i = 0; i < galleryItems.length; i++) {
+  if (event.code === 'ArrowRight' && refs.modal.classList.contains('is-open')) {
+    for (let i = galleryItems.length - 1; i >= 0; i--) {
       if (galleryItems[i].description === refs.modalImg.alt) {
-        refs.modalImg.src = `${galleryItems[i + 1].original}`;
-        refs.modalImg.alt = `${galleryItems[i + 1].description}`;
+        if (i === galleryItems.length - 1) {
+          refs.modalImg.src = galleryItems[0].original;
+          refs.modalImg.alt = galleryItems[0].description;
+        } else {
+          refs.modalImg.src = galleryItems[i + 1].original;
+          refs.modalImg.alt = galleryItems[i + 1].description;
+        }
       }
     }
   }
