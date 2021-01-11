@@ -56,8 +56,7 @@ function onGalleryClick(event) {
     const ImgDesc = event.target.getAttribute('alt');
 
     console.log(bigImgUrl);
-    changeModalImgSrc(bigImgUrl);
-    changeModalImgAlt(ImgDesc);
+    changeModalImg(bigImgUrl, ImgDesc);
     openModal();
   }
 }
@@ -65,50 +64,41 @@ function onGalleryClick(event) {
 // 3. Открытие модального окна по клику на элементе галереи.
 
 function openModal() {
-  // refs.modal.classList.add('is-open');
-  refs.modal.classList.toggle('is-open');
+  refs.modal.classList.toggle('is-open'); // refs.modal.classList.add('is-open');
   refs.body.style.overflow = 'hidden'; // отключаю скролл при открытии модального окна
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image.
 
-function changeModalImgSrc(url) {
+function changeModalImg(url, desc) {
   refs.modalImg.src = url;
-}
-
-function changeModalImgAlt(desc) {
   refs.modalImg.alt = desc;
 }
 
 // 5. Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
 
-refs.closeBtn.addEventListener('click', onCloseBtnClick);
-
-function onCloseBtnClick() {
-  cleanModalImgSrc();
-  cleanModalImgAlt();
-  closeModal();
-}
+refs.closeBtn.addEventListener('click', closeModal);
 
 function closeModal() {
-  // refs.modal.classList.remove('is-open');
-  refs.modal.classList.toggle('is-open');
+  removeClassIsOpen();
+  cleanModalImg();
+}
+
+function removeClassIsOpen() {
+  refs.modal.classList.toggle('is-open'); // refs.modal.classList.remove('is-open');
   refs.body.removeAttribute('style'); // возвращаю скролл при закрытии модального окна
 }
 
 // 6. Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
 
-function cleanModalImgSrc() {
+function cleanModalImg() {
   refs.modalImg.src = '';
-}
-
-function cleanModalImgAlt() {
   refs.modalImg.alt = '';
 }
 
 // 7. Закрытие модального окна по клику на div.lightbox__overlay.
 
-refs.lightboxOverlay.addEventListener('click', onCloseBtnClick);
+refs.lightboxOverlay.addEventListener('click', closeModal);
 
 // 8. Закрытие модального окна по нажатию клавиши ESC.
 
@@ -116,7 +106,7 @@ window.addEventListener('keydown', onEscClick);
 
 function onEscClick(event) {
   if (event.code === 'Escape' && refs.modal.classList.contains('is-open')) {
-    onCloseBtnClick();
+    closeModal();
   }
 }
 
