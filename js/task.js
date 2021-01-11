@@ -56,21 +56,21 @@ function onGalleryClick(event) {
     const ImgDesc = event.target.getAttribute('alt');
 
     console.log(bigImgUrl);
-    changeModalImg(bigImgUrl, ImgDesc);
-    openModal();
+    openModal(bigImgUrl, ImgDesc);
   }
 }
 
 // 3. Открытие модального окна по клику на элементе галереи.
 
-function openModal() {
+function openModal(url, desc) {
+  addModalImg(url, desc);
   refs.modal.classList.toggle('is-open'); // refs.modal.classList.add('is-open');
   refs.body.style.overflow = 'hidden'; // отключаю скролл при открытии модального окна
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image.
 
-function changeModalImg(url, desc) {
+function addModalImg(url, desc) {
   refs.modalImg.src = url;
   refs.modalImg.alt = desc;
 }
@@ -80,18 +80,14 @@ function changeModalImg(url, desc) {
 refs.closeBtn.addEventListener('click', closeModal);
 
 function closeModal() {
-  removeClassIsOpen();
-  cleanModalImg();
-}
-
-function removeClassIsOpen() {
+  removeModalImg();
   refs.modal.classList.toggle('is-open'); // refs.modal.classList.remove('is-open');
   refs.body.removeAttribute('style'); // возвращаю скролл при закрытии модального окна
 }
 
 // 6. Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
 
-function cleanModalImg() {
+function removeModalImg() {
   refs.modalImg.src = '';
   refs.modalImg.alt = '';
 }
